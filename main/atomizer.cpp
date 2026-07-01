@@ -1,21 +1,19 @@
 #include "atomizer.h"
+#include "app_gpio.h"
 
+#define ATOMIZER_GPIO GPIO_NUM_18
 
-// function not specifically necessary but does bring more readability in main
-void atomizer_on(gpio_num_t gpio_num)
+void atomizer_init()
 {
-        gpio_set_level(gpio_num, 0);
+    gpio_init_output(ATOMIZER_GPIO);
 }
 
-void atomizer_off(gpio_num_t gpio_num)
+void atomizer_on()
 {
-        gpio_set_level(gpio_num, 1);
+    gpio_set_output(ATOMIZER_GPIO, 1);
 }
 
-// gpio_set_level(ATOMIZER_GPIO, 0);
-// printf("Atomizer ON\n");
-
-// vTaskDelay(pdMS_TO_TICKS(10000));
-
-// gpio_set_level(ATOMIZER_GPIO, 1);
-// printf("Atomizer OFF\n");
+void atomizer_off()
+{
+    gpio_set_output(ATOMIZER_GPIO, 0);
+}
