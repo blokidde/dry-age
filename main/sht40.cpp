@@ -1,4 +1,5 @@
 #include  "sht40.h"
+#include "driver/hpio.h"
 
 #define SHT40_CMD_MEASURE 0xFD
 #define SHT40_BYTES 6
