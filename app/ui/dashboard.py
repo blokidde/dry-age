@@ -14,9 +14,22 @@ chart_options = {
         "type": "category",
         "data": ["12:00", "12:05", "12:10", "12:15", "12:20"],
     },
-    "yAxis": {
-        "type": "value",
-    },
+    "yAxis":[ 
+        {
+            "type": "value",
+        },
+        {
+            "type": "value",
+            "name": "relais",
+            "position": "right",
+            "min": 0,
+            "max": 1,
+            "interval": 1,
+            "axisLabel": {
+                "formatter": "{value}",
+            },
+        },
+    ],
     "series": [
         {
             "name": "Temperature",
@@ -27,6 +40,12 @@ chart_options = {
             "name": "relais",
             "type": "line",
             "data": [0, 1, 0, 1, 0],
+            "yAxisIndex": 1,
+            "step": "end",
+            "symbolSize": 10,
+            "lineStyle": {
+                "width": 3,
+            },
         },
     ],
 }
@@ -37,21 +56,34 @@ ui.echart(chart_options).classes("w-full h-96")
 
 chart_options = {
     "title": {
-        "text": "humidity",
+        "text": "humidity and fan speed",
     },
     "tooltip": {
         "trigger": "axis",
     },
     "legend": {
-        "data": ["Humidity", "atomizer"],
+        "data": ["Humidity", "fan speed", "atomizer"],
     },
     "xAxis": {
         "type": "category",
         "data": ["12:00", "12:05", "12:10", "12:15", "12:20"],
     },
-    "yAxis": {
-        "type": "value",
-    },
+    "yAxis":[ 
+        {
+            "type": "value",
+        },
+        {
+            "type": "value",
+            "name": "atomizer",
+            "position": "right",
+            "min": 0,
+            "max": 1,
+            "interval": 1,
+            "axisLabel": {
+                "formatter": "{value}",
+            },
+        },
+    ],
     "series": [
         {
             "name": "Humidity",
@@ -59,44 +91,25 @@ chart_options = {
             "data": [62.0, 61.5, 60.8, 60.2, 59.9],
         },
         {
+            "name": "fan speed",
+            "type": "line",
+            "data": [22.8, 23.1, 23.4, 23.2, 23.0],
+        },
+        {
             "name": "atomizer",
             "type": "line",
             "data": [0, 1, 0, 1, 0],
+            "yAxisIndex": 1,
+            "step": "end",
+            "symbolSize": 10,
+            "lineStyle": {
+                "width": 3,
+            },
         },
     ],
 }
 
 ui.label("luchtvochtigheid en vernevelaar switch").classes("text-2xl font-bold")
-
-ui.echart(chart_options).classes("w-full h-96")
-
-chart_options = {
-    "title": {
-        "text": "speed in %",
-    },
-    "tooltip": {
-        "trigger": "axis",
-    },
-    "legend": {
-        "data": ["speed in %"],
-    },
-    "xAxis": {
-        "type": "category",
-        "data": ["12:00", "12:05", "12:10", "12:15", "12:20"],
-    },
-    "yAxis": {
-        "type": "value",
-    },
-    "series": [
-        {
-            "name": "speed in %",
-            "type": "line",
-            "data": [22.8, 23.1, 23.4, 23.2, 23.0],
-        },
-    ],
-}
-
-ui.label("fan on").classes("text-2xl font-bold")
 
 ui.echart(chart_options).classes("w-full h-96")
 
