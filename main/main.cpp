@@ -34,7 +34,7 @@ extern "C" void app_main(void)
     printf("I2C master initialized\n");
 
     //init gpio for atomizer
-    atomizer_init();    
+    atomizer_init();
     printf("GPIO for atomizer initialized\n");
 
     relais_init();
@@ -43,9 +43,16 @@ extern "C" void app_main(void)
     fan_pwm_init();
     printf("PWM for fan initialized\n");
 
+    // states for fan control with atomizer and relais
+    bool atomizer_state = false;
+    bool relais_state = false;
+
     for(;;) {
         // Read temperature and humidity from SHT40 sensor
         esp_err_t ret = read_sht40(dev_handle, &data);
+
+        // set initial fan speed to idle
+        fan_set_speed(FAN_SPEED_IDLE);
         
         //check if the read was successful and print the values or an error message
         if(ret == ESP_OK) {
@@ -54,22 +61,35 @@ extern "C" void app_main(void)
             // Control the relais and atomizer based on the temperature and humidity readings
             if (data.temperature > TEMPERATURE_RELAIS_ON) {
                 relais_on();
+                relais_state = true;
                 printf("Relais ON\n");
             } else if (data.temperature < TEMPERATURE_RELAIS_OFF) {
                 relais_off();
+                relais_state = false;
                 printf("Relais OFF\n");
             }
 
             if (data.humidity < HUMIDITY_ATOMIZER_ON) {
                 atomizer_on();
+                atomizer_state = true;
                 printf("Atomizer ON\n");
             } else if (data.humidity > HUMIDITY_ATOMIZER_OFF) {
                 atomizer_off();
+                atomizer_state = false;
                 printf("Atomizer OFF\n");
             }
+            
+            if (atomizer_state) {
+                fan_set_speed(FAN_SPEED_ATOMIZER);
+            } else if(relais_state) {
+                fan_set_speed(FAN_SPEED_COOLING);
+            } else {
+                fan_set_speed(FAN_SPEED_IDLE);
+            }
+
         } else {
             printf("Error reading SHT40 sensor: %d\n", ret);
         }
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
