@@ -115,6 +115,6 @@ ui.echart(chart_options).classes("w-full h-96")
 
 with ui.card().tight():
     with ui.card_section():
-        ui.label('Lorem ipsum dolor sit amet, consectetur adipiscing elit, ...')
-
+        ui.label("Startdatum: 7 juli 2026")
+        # hier actuale batch data uit database halen
 ui.run()
