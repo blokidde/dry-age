@@ -11,7 +11,7 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=c:\\Users\\jurriaan\\hello_world\\build"
+    "--compile-commands-dir=c:\\Users\\jurriaan\\droogkast\\build"
   ],
   "idf.portWin": "COM4",
   "idf.flashType": "UART"

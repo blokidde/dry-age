@@ -23,20 +23,21 @@
 
 extern "C" void app_main(void)
 {
-    //init to nullptr so they can be safely used in init functions
+    // init to nullptr so they can be safely used in init functions
     i2c_master_bus_handle_t bus_handle = nullptr;
     i2c_master_dev_handle_t dev_handle = nullptr;
 
-    //data struct to hold the temperature and humidity readings
+    // data struct to hold the temperature and humidity readings
     sht40_data_t data = {};
 
     sht40_i2c_init(&bus_handle, &dev_handle);
     printf("I2C master initialized\n");
 
-    //init gpio for atomizer
+    // init gpio for atomizer
     atomizer_init();
     printf("GPIO for atomizer initialized\n");
 
+    // init gpio for relais
     relais_init();
     printf("GPIO for relais initialized\n");
 
@@ -54,7 +55,7 @@ extern "C" void app_main(void)
         // set initial fan speed to idle
         fan_set_speed(FAN_SPEED_IDLE);
         
-        //check if the read was successful and print the values or an error message
+        // check if the read was successful and print the values or an error message
         if(ret == ESP_OK) {
             printf("Temperature: %.2f °C, Humidity: %.2f %%\n", data.temperature, data.humidity);
 
